@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [userPrompt, setUserPrompt] = useState<string>("");
 
+  // TODO: Handle this logic in a seperate file to keep the App tsx clean.
+  const handlePromptSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("User Prompt Submitted:", userPrompt);
+  };
+
+  // TODO: Make this input value controlled by setting its value to userPrompt.
+  // We do not want to state in a more performance way so that react will not re-render on every keystroke.
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <main>
+      <h3>Generate with AI</h3>
+
+      <form onSubmit={handlePromptSubmit}>
+        <input
+          type="text"
+          name="promt-description"
+          placeholder="Enter a prompt"
+          onChange={(e) => setUserPrompt(e.target.value)}
+        />
+        <input type="submit" value="Generate your task" />
+      </form>
+    </main>
+  );
 }
 
-export default App
+export default App;
