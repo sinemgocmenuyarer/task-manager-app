@@ -1,12 +1,16 @@
 import { useState, type ReactNode } from "react";
-import { ProjectContext, type NewProjectData } from "./core";
+import {
+  ProjectContext,
+  type Project,
+  type ProjectsState,
+} from "./core";
 
 export const ProjectContextProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
-  const [projectsState, setProjectState] = useState<NewProjectData>({
+  const [projectsState, setProjectState] = useState<ProjectsState>({
     selectedProjectId: undefined,
     projects: [],
     tasks: [],
@@ -21,7 +25,7 @@ export const ProjectContextProvider = ({
     });
   };
 
-  function handleSaveProject(projectData) {
+  function handleSaveProject(projectData: Omit<Project, "id">) {
     setProjectState((prevState) => {
       const newProject = { ...projectData, id: Math.random() };
 
@@ -42,7 +46,7 @@ export const ProjectContextProvider = ({
     });
   };
 
-  const handleSelectProject = (id) => {
+  const handleSelectProject = (id: number) => {
     setProjectState((prevState) => {
       return {
         ...prevState,
@@ -53,6 +57,9 @@ export const ProjectContextProvider = ({
 
   function handleAddTask(text: string) {
     setProjectState((prevState) => {
+      if (prevState.selectedProjectId === null || prevState.selectedProjectId === undefined) {
+        return prevState;
+      }
       const taskId = Math.random();
       const newTask = {
         text: text,
@@ -77,11 +84,14 @@ export const ProjectContextProvider = ({
 
   const handleDeleteProject = () => {
     setProjectState((prevState) => {
+      if (prevState.selectedProjectId === null || prevState.selectedProjectId === undefined) {
+        return prevState;
+      }
       return {
         ...prevState,
         selectedProjectId: undefined,
         projects: prevState.projects.filter(
-          (project) => project.id !== projectsState.selectedProjectId,
+          (project) => project.id !== prevState.selectedProjectId,
         ),
       };
     });

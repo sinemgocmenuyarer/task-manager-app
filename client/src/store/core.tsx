@@ -1,16 +1,36 @@
 import { createContext } from "react";
 
-export type Projects = {
-  project: { id: number; title: string }[];
+export type Project = {
+  id: number;
+  title: string;
+  description: string;
+  dueDate: string;
 };
 
-export type NewProjectData = {
-  selectedProjectId: string | undefined;
-  projects: Projects;
-  tasks: { id: number; text: string; projectId: number }[];
+export type Task = {
+  id: number;
+  text: string;
+  projectId: number;
 };
 
-export const ProjectContext = createContext({
+export type ProjectsState = {
+  selectedProjectId: number | null | undefined;
+  projects: Project[];
+  tasks: Task[];
+};
+
+export type ProjectContextValue = {
+  projectsState: ProjectsState;
+  handleAddProject: () => void;
+  handleSaveProject: (projectData: Omit<Project, "id">) => void;
+  handleCancelProject: () => void;
+  handleSelectProject: (id: number) => void;
+  handleAddTask: (text: string) => void;
+  handleDeleteTask: (taskId: number) => void;
+  handleDeleteProject: () => void;
+};
+
+export const ProjectContext = createContext<ProjectContextValue>({
   projectsState: {
     selectedProjectId: undefined,
     projects: [],

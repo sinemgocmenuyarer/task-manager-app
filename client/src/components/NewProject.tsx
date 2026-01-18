@@ -6,7 +6,7 @@ import { ProjectContext } from "../store/core.tsx";
 export const NewProject = () => {
   const { handleSaveProject, handleCancelProject } = useContext(ProjectContext);
 
-  const modal = useRef();
+  const modal = useRef<{ open: () => void } | null>(null);
 
   const title = useRef<HTMLInputElement>(null);
   const description = useRef<HTMLInputElement>(null);
@@ -18,11 +18,14 @@ export const NewProject = () => {
     const enteredDueDate = dueDate?.current?.value;
 
     if (
-      enteredTitle?.trim() === "" ||
-      enteredDescription?.trim() === "" ||
-      enteredDueDate?.trim() === ""
+      !enteredTitle ||
+      !enteredDescription ||
+      !enteredDueDate ||
+      enteredTitle.trim() === "" ||
+      enteredDescription.trim() === "" ||
+      enteredDueDate.trim() === ""
     ) {
-      modal.current.open();
+      modal.current?.open();
       return;
     }
 

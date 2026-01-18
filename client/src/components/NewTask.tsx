@@ -1,11 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext, useState, type ChangeEvent } from "react";
 import { ProjectContext } from "../store/core";
+import { Button } from "./Button";
+import { GenerateTaskButton } from "./GenerateTaskButton";
 
 export const NewTask = () => {
   const { handleAddTask } = useContext(ProjectContext);
   const [enteredTask, setEnteredTask] = useState("");
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setEnteredTask(event.target.value);
   }
 
@@ -25,12 +27,13 @@ export const NewTask = () => {
         onChange={handleChange}
         value={enteredTask}
       />
-      <button
+      <Button
         className="text-stone-700 hover:text-stone-950"
         onClick={handleClick}
       >
         Add Task
-      </button>
+      </Button>
+      <GenerateTaskButton />
     </div>
   );
 };

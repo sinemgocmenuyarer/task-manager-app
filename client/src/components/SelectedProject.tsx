@@ -4,18 +4,17 @@ import { Tasks } from "./Tasks.tsx";
 import { ProjectContext } from "../store/core.tsx";
 
 export const SelectedProject = () => {
-  const {
-    projectsState,
-    handleDeleteProject,
-    handleDeleteTask,
-    handleAddTask,
-  } = useContext(ProjectContext);
+  const { projectsState, handleDeleteProject } = useContext(ProjectContext);
 
-  let project = projectsState.projects.find(
-    (project) => project.id === projectsState.selectedProjectId,
+  const project = projectsState.projects.find(
+    (projectItem) => projectItem.id === projectsState.selectedProjectId,
   );
 
-  const formattedDate = new Date(project.dueDate).toLocaleDateString({
+  if (!project) {
+    return null;
+  }
+
+  const formattedDate = new Date(project.dueDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -40,11 +39,7 @@ export const SelectedProject = () => {
           {project.description}
         </p>
       </header>
-      <Tasks
-        tasks={projectsState.tasks}
-        onDelete={handleDeleteTask}
-        onAdd={handleAddTask}
-      />
+      <Tasks />
     </div>
   );
 };
