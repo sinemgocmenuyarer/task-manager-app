@@ -1,23 +1,26 @@
 import openai from "./api.js";
-
+// TODO: Refine the prompt to ensure concise and actionable plans
+// TODO: Implement empty response handling for API requests
 const genererateResponse = async (prompt) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
+      model: "gpt-4.1",
       messages: [
         {
+          role: "system",
+          content:
+            "You are a concise planning assistant. Produce a short, actionable, step-by-step personal plan. Use 3-7 numbered steps, keep each step one sentence, and include only the plan.",
+        },
+        {
           role: "user",
-          content: `Break into this task to make a proper, step by step personal plan ${prompt}`,
+          content: `Create a step-by-step personal plan for: ${prompt}`,
         },
       ],
-      max_tokens: 500,
     });
-
-    return response.choices[0].message.content;
+    return response.choices[0]?.message.content;
   } catch (error) {
     console.error("Error generating response:", error);
     throw error;
   }
 };
-
 export default genererateResponse;

@@ -21,7 +21,6 @@ function App() {
     });
 
     const data = await response.json();
-    console.log("Generated Response:", data.response);
     return data;
   };
   // TODO: Make this input value controlled by setting its value to userPrompt.
