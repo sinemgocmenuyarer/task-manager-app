@@ -65,6 +65,7 @@ export const ProjectContextProvider = ({
       return {
         ...prevState,
         tasks: [newTask, ...prevState.tasks],
+        userMessage: null,
       };
     });
   }
@@ -85,6 +86,7 @@ export const ProjectContextProvider = ({
       return {
         ...prevState,
         tasks: [...newTasks, ...prevState.tasks],
+        userMessage: null,
       };
     });
   }

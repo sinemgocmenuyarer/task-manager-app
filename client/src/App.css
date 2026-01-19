@@ -55,6 +55,13 @@ body {
   flex: 1;
 }
 
+.main-panel:has(.new-project) {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
 /* Sidebar */
 .sidebar {
   display: flex;
@@ -173,9 +180,25 @@ body {
 
 /* New Project */
 .new-project {
+  --new-project-image: url("./assets/pencil.jpg");
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 0.0625rem solid #e2d3c3;
+  min-height: 16.25rem;
+  width: 100%;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(251, 246, 238, 0.92),
+      rgba(251, 246, 238, 0.7)
+    ),
+    var(--new-project-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .new-project-actions {
@@ -299,7 +322,7 @@ body {
       rgba(251, 246, 238, 0.92),
       rgba(251, 246, 238, 0.7)
     ),
-    url("./assets/tutor.jpg");
+    url("./assets/ai.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -347,7 +370,7 @@ body {
       rgba(251, 246, 238, 0.92),
       rgba(251, 246, 238, 0.7)
     ),
-    url("./assets/tutor.jpg");
+    url("./assets/pencil.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
