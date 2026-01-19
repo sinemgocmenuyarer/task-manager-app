@@ -19,7 +19,6 @@ app.post("/generate", async (req, res) => {
     res.json(JSON.parse(response));
   } catch (error) {
     console.error("Error generating response:", error);
-    res.status(500).json({ error: "Failed to generate response" });
   }
 });
 
