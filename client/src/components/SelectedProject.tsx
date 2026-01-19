@@ -39,9 +39,6 @@ export const SelectedProject = () => {
         <div className="selected-project-generator">
           <GenerateTaskButton />
         </div>
-        <p className="tasks-subtitle">
-          You can also add your own tasks to this project.
-        </p>
         <div className="tasks-new">
           <NewTask />
         </div>

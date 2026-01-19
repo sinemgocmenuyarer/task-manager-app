@@ -17,7 +17,10 @@ export const Tasks = () => {
 
   if (projectTasks.length === 0 && projectsState.userMessage === null) {
     content = (
-      <p className="tasks-empty">This project does not have any tasks yet</p>
+      <p className="tasks-empty">
+        This project does not have any tasks yet. Please add a new task by
+        either generating with AI or adding manually.
+      </p>
     );
   } else if (projectsState.userMessage !== null) {
     content = <p className="user-message">{projectsState.userMessage}</p>;

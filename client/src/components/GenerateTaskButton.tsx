@@ -1,6 +1,7 @@
 import { useContext, useState, type ChangeEvent } from "react";
 import { Button } from "./Button";
 import { ProjectContext, type GenerateResponse } from "../store/core";
+import Input from "./Input";
 
 export const GenerateTaskButton = () => {
   const { handleAddTasks, handleUserMessage, handleClearProjectTasks } =
@@ -12,7 +13,9 @@ export const GenerateTaskButton = () => {
     setEnteredTask(event.target.value);
   }
 
-  const handlePromptSubmit = async () => {
+  const handlePromptSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (isLoading) {
       return;
     }
@@ -31,7 +34,6 @@ export const GenerateTaskButton = () => {
       } else {
         handleClearProjectTasks();
       }
-
       handleUserMessage(message);
     } finally {
       setIsLoading(false);
@@ -57,21 +59,25 @@ export const GenerateTaskButton = () => {
         Do you want to generate your tasks with AI?
       </p>
       {isLoading && <p className="ai-loading-text">Generating tasks...</p>}
-      <input
-        type="text"
-        className="new-task-input"
-        onChange={handleChange}
-        value={enteredTask}
-        placeholder="Type here..."
-        disabled={isLoading}
-      />
-      <Button
-        className="primary-button ai-generate-button"
-        onClick={handlePromptSubmit}
-        disabled={isLoading}
-      >
-        {isLoading ? "Generating..." : "Generate with AI"}
-      </Button>
+      <form className="new-task-form" onSubmit={handlePromptSubmit}>
+        <Input
+          type="text"
+          className="new-task-input"
+          onChange={handleChange}
+          value={enteredTask}
+          placeholder="Type here..."
+          disabled={isLoading}
+          label={"ai-task-input"}
+        />
+        <div className="ai-task-actions">
+          <Button
+            className="primary-button ai-generate-button"
+            disabled={isLoading}
+          >
+            {isLoading ? "Generating..." : "Generate with AI"}
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
