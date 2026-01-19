@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { Button } from "./Button.js";
+import { Button } from "./Button";
 
 type ModalHandle = {
   open: () => void;
@@ -11,7 +11,7 @@ type ModalProps = {
   buttonCaption: string;
 };
 
-const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
+export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
   { children, buttonCaption },
   ref,
 ) {
@@ -40,5 +40,3 @@ const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
     modalRoot,
   );
 });
-
-export default Modal;

@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
-import Input from "./Input.tsx";
-import Modal from "./Modal.tsx";
-import { ProjectContext } from "../store/core.tsx";
+import { Input } from "./Input";
+import { Modal } from "./Modal";
+import { ProjectContext } from "../store/core";
 
 export const NewProject = () => {
   const { handleSaveProject, handleCancelProject } = useContext(ProjectContext);
@@ -39,7 +39,9 @@ export const NewProject = () => {
   return (
     <>
       <Modal ref={modal} buttonCaption="Okay">
-        <p className="modal-message">Please make sure you provide a valid input</p>
+        <p className="modal-message">
+          Please make sure you provide a valid input
+        </p>
       </Modal>
       <div className="new-project">
         <menu className="new-project-actions">

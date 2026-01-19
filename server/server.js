@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import genererateResponse from "./generate.js";
+import genererateResponse from "./generateResponse.js";
 
 const app = express();
 app.use(express.json());
@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
   res.send("Hello from the server!❤️");
 });
 
-// POST request handler for generating responses
+//POST request handler for generating responses
 app.post("/generate", async (req, res) => {
   try {
     const { prompt } = req.body;

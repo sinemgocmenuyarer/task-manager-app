@@ -1,7 +1,6 @@
 import openai from "./api.js";
 import { TASK_BREAKDOWN_SYSTEM_PROMPT } from "./prompt.js";
-// TODO: Refine the prompt to ensure concise and actionable plans
-// TODO: Implement empty response handling for API requests
+
 const genererateResponse = async (prompt) => {
   try {
     const response = await openai.chat.completions.create({

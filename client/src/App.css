@@ -334,6 +334,24 @@ body {
 
 .tasks-new {
   margin-bottom: 0.5rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 0.0625rem solid #e2d3c3;
+  min-height: 16.25rem;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(251, 246, 238, 0.92),
+      rgba(251, 246, 238, 0.7)
+    ),
+    url("./assets/tutor.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .tasks-empty {
@@ -373,25 +391,6 @@ body {
 }
 
 /* New Task */
-.new-task {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  border: 0.0625rem solid #e2d3c3;
-  min-height: 16.25rem;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(251, 246, 238, 0.92),
-      rgba(251, 246, 238, 0.7)
-    ),
-    url("./assets/pencil.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
 
 .new-task-form {
   display: flex;

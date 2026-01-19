@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { Tasks } from "./Tasks.tsx";
 import { ProjectContext } from "../store/core.tsx";
-import { GenerateTaskButton } from "./GenerateTaskButton.tsx";
+import { GenerateTaskButton } from "./GenerateTask.tsx";
 import { NewTask } from "./NewTask.tsx";
 
 export const SelectedProject = () => {

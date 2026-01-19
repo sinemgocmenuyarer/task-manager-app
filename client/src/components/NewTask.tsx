@@ -21,7 +21,7 @@ export const NewTask = () => {
   }
 
   return (
-    <div className="new-task">
+    <>
       <p className="tasks-subtitle">
         You can also add your own tasks to this project.
       </p>
@@ -40,6 +40,6 @@ export const NewTask = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </>
   );
 };

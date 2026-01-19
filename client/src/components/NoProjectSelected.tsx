@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { Button } from "./Button.js";
-import { ProjectContext } from "../store/core.js";
+import { Button } from "./Button";
+import { ProjectContext } from "../store/core";
 
 export const NoProjectSelected = () => {
   const { handleAddProject } = useContext(ProjectContext);

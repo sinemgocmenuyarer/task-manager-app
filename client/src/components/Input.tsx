@@ -1,31 +1,45 @@
-import { forwardRef, type InputHTMLAttributes } from "react";
+import {
+  forwardRef,
+  useId,
+  type InputHTMLAttributes,
+  type TextareaHTMLAttributes,
+} from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  textarea?: boolean;
-}
+type InputProps =
+  | (InputHTMLAttributes<HTMLInputElement> & {
+      label: string;
+      textarea?: false;
+    })
+  | (TextareaHTMLAttributes<HTMLTextAreaElement> & {
+      label: string;
+      textarea: true;
+    });
 
-const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
-  function Input({ label, textarea, ...props }, ref) {
-    return (
-      <p className="form-field">
-        <label className="form-label">{label}</label>
-        {textarea ? (
-          <textarea
-            ref={ref as React.Ref<HTMLTextAreaElement>}
-            className="form-textarea"
-            {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
-          />
-        ) : (
-          <input
-            ref={ref as React.Ref<HTMLInputElement>}
-            className="form-input"
-            {...props}
-          />
-        )}
-      </p>
-    );
-  },
-);
-
-export default Input;
+export const Input = forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  InputProps
+>(function Input({ label, textarea, ...props }, ref) {
+  const inputId = useId();
+  return (
+    <p className="form-field">
+      <label className="form-label" htmlFor={inputId}>
+        {label}
+      </label>
+      {textarea ? (
+        <textarea
+          id={inputId}
+          ref={ref as React.Ref<HTMLTextAreaElement>}
+          className="form-textarea"
+          {...(props as TextareaHTMLAttributes<HTMLTextAreaElement>)}
+        />
+      ) : (
+        <input
+          id={inputId}
+          ref={ref as React.Ref<HTMLInputElement>}
+          className="form-input"
+          {...(props as InputHTMLAttributes<HTMLInputElement>)}
+        />
+      )}
+    </p>
+  );
+});
