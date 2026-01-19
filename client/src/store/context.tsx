@@ -1,9 +1,5 @@
 import { useState, type ReactNode } from "react";
-import {
-  ProjectContext,
-  type Project,
-  type ProjectsState,
-} from "./core";
+import { ProjectContext, type Project, type ProjectsState } from "./core";
 
 export const ProjectContextProvider = ({
   children,
@@ -14,6 +10,7 @@ export const ProjectContextProvider = ({
     selectedProjectId: undefined,
     projects: [],
     tasks: [],
+    userMessage: null,
   });
 
   const handleAddProject = () => {
@@ -57,14 +54,15 @@ export const ProjectContextProvider = ({
 
   function handleAddTask(text: string) {
     setProjectState((prevState) => {
-      if (prevState.selectedProjectId === null || prevState.selectedProjectId === undefined) {
+      if (
+        prevState.selectedProjectId === null ||
+        prevState.selectedProjectId === undefined
+      ) {
         return prevState;
       }
-      const taskId = Math.random();
       const newTask = {
         text: text,
         projectId: prevState.selectedProjectId,
-        id: taskId,
       };
       return {
         ...prevState,
@@ -73,18 +71,69 @@ export const ProjectContextProvider = ({
     });
   }
 
-  function handleDeleteTask(taskId: number) {
+  function handleAddTasks(titles: string[]) {
+    setProjectState((prevState) => {
+      if (
+        prevState.selectedProjectId === null ||
+        prevState.selectedProjectId === undefined
+      ) {
+        return prevState;
+      }
+      if (titles.length === 0) {
+        return prevState;
+      }
+      const newTasks = titles.map((title) => ({
+        text: title,
+        projectId: prevState.selectedProjectId,
+      }));
+      return {
+        ...prevState,
+        tasks: [...newTasks, ...prevState.tasks],
+      };
+    });
+  }
+
+  function handleDeleteTask(taskIndex: number) {
     setProjectState((prevState) => {
       return {
         ...prevState,
-        tasks: prevState.tasks.filter((task) => task.id !== taskId),
+        tasks: prevState.tasks.filter((_, index) => index !== taskIndex),
+      };
+    });
+  }
+
+  function handleUserMessage(userMessage: string | null) {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        userMessage,
+      };
+    });
+  }
+
+  function handleClearProjectTasks() {
+    setProjectState((prevState) => {
+      if (
+        prevState.selectedProjectId === null ||
+        prevState.selectedProjectId === undefined
+      ) {
+        return prevState;
+      }
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter(
+          (task) => task.projectId !== prevState.selectedProjectId,
+        ),
       };
     });
   }
 
   const handleDeleteProject = () => {
     setProjectState((prevState) => {
-      if (prevState.selectedProjectId === null || prevState.selectedProjectId === undefined) {
+      if (
+        prevState.selectedProjectId === null ||
+        prevState.selectedProjectId === undefined
+      ) {
         return prevState;
       }
       return {
@@ -104,8 +153,11 @@ export const ProjectContextProvider = ({
     handleCancelProject,
     handleSelectProject,
     handleAddTask,
+    handleAddTasks,
     handleDeleteTask,
     handleDeleteProject,
+    handleUserMessage,
+    handleClearProjectTasks,
   };
 
   return (

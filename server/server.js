@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import genererateResponse from "./generate.js";
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -15,7 +16,7 @@ app.post("/generate", async (req, res) => {
   try {
     const { prompt } = req.body;
     const response = await genererateResponse(prompt);
-    res.json({ response });
+    res.json(JSON.parse(response));
   } catch (error) {
     console.error("Error generating response:", error);
     res.status(500).json({ error: "Failed to generate response" });

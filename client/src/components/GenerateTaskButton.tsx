@@ -3,16 +3,9 @@ import { Button } from "./Button";
 import { ProjectContext } from "../store/core";
 
 export const GenerateTaskButton = () => {
-  const { projectsState } = useContext(ProjectContext);
+  const { handleAddTasks, handleUserMessage, handleClearProjectTasks } =
+    useContext(ProjectContext);
   const [enteredTask, setEnteredTask] = useState("");
-
-  const project = projectsState.projects.find(
-    (projectItem) => projectItem.id === projectsState.selectedProjectId,
-  );
-
-  if (!project) {
-    return null;
-  }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setEnteredTask(event.target.value);
@@ -20,7 +13,19 @@ export const GenerateTaskButton = () => {
 
   const handlePromptSubmit = async () => {
     const response = await generateResponse();
-    console.log("response:", response);
+    console.log("AI Response:", response);
+    const message = response.user_message ?? null;
+
+    if (response.status === "success") {
+      const titles = response.steps
+        .map((step) => step.title)
+        .filter((title) => title && title.trim().length > 0);
+      handleAddTasks(titles);
+    } else {
+      handleClearProjectTasks();
+    }
+
+    handleUserMessage(message);
   };
 
   const generateResponse = async () => {
@@ -29,10 +34,10 @@ export const GenerateTaskButton = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt: project.description }),
+      body: JSON.stringify({ prompt: enteredTask }),
     });
 
-    const data = await response.json();
+    const data = response.json();
     return data;
   };
 

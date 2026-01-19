@@ -1,4 +1,5 @@
 import openai from "./api.js";
+import { TASK_BREAKDOWN_SYSTEM_PROMPT } from "./prompt.js";
 // TODO: Refine the prompt to ensure concise and actionable plans
 // TODO: Implement empty response handling for API requests
 const genererateResponse = async (prompt) => {
@@ -8,8 +9,7 @@ const genererateResponse = async (prompt) => {
       messages: [
         {
           role: "system",
-          content:
-            "You are a concise planning assistant. Produce a short, actionable, step-by-step personal plan. Use 3-7 numbered steps, keep each step one sentence, and include only the plan.",
+          content: TASK_BREAKDOWN_SYSTEM_PROMPT,
         },
         {
           role: "user",
@@ -17,7 +17,7 @@ const genererateResponse = async (prompt) => {
         },
       ],
     });
-    return response.choices[0]?.message.content;
+    return response.choices[0]?.message?.content ?? "";
   } catch (error) {
     console.error("Error generating response:", error);
     throw error;
