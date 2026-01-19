@@ -54,15 +54,13 @@ export const ProjectContextProvider = ({
 
   function handleAddTask(text: string) {
     setProjectState((prevState) => {
-      if (
-        prevState.selectedProjectId === null ||
-        prevState.selectedProjectId === undefined
-      ) {
+      const projectId = prevState.selectedProjectId;
+      if (projectId === null || projectId === undefined) {
         return prevState;
       }
       const newTask = {
         text: text,
-        projectId: prevState.selectedProjectId,
+        projectId,
       };
       return {
         ...prevState,
@@ -73,10 +71,8 @@ export const ProjectContextProvider = ({
 
   function handleAddTasks(titles: string[]) {
     setProjectState((prevState) => {
-      if (
-        prevState.selectedProjectId === null ||
-        prevState.selectedProjectId === undefined
-      ) {
+      const projectId = prevState.selectedProjectId;
+      if (projectId === null || projectId === undefined) {
         return prevState;
       }
       if (titles.length === 0) {
@@ -84,7 +80,7 @@ export const ProjectContextProvider = ({
       }
       const newTasks = titles.map((title) => ({
         text: title,
-        projectId: prevState.selectedProjectId,
+        projectId,
       }));
       return {
         ...prevState,

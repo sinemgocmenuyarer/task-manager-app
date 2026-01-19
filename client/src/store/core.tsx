@@ -19,6 +19,19 @@ export type ProjectsState = {
   userMessage: null | string;
 };
 
+type GeneratedStep = {
+  id: string;
+  title: string;
+  effort?: string;
+  detail?: string;
+};
+
+export type GenerateResponse = {
+  steps: GeneratedStep[];
+  status: string;
+  user_message: string | null;
+};
+
 export type ProjectContextValue = {
   projectsState: ProjectsState;
   handleAddProject: () => void;

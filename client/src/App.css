@@ -363,6 +363,12 @@ body {
   color: var(--muted);
 }
 
+.ai-loading-text {
+  margin: 0;
+  color: #7b6757;
+  font-size: 14px;
+}
+
 .status-board {
   display: grid;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
