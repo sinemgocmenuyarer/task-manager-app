@@ -1,19 +1,18 @@
 import { render, screen } from "@testing-library/react";
-import { ProjectContext, type ProjectContextValue } from "../store/core";
+import { ProjectContext, type ProjectContextValue } from "../store/context";
 import { NewProject } from "./NewProject";
 
-const baseContext: Partial<ProjectContextValue> = {
-  projectsState: {
-    selectedProjectId: undefined,
-    projects: [],
-    tasks: [],
-    userMessage: null,
-  },
-  handleAddProject: () => {},
-};
+import { baseContext } from "../test/helper";
 
-const renderWithContext = (overrides?: Partial<ProjectContextValue>) => {
-  const value = { ...baseContext, ...overrides } as ProjectContextValue;
+const renderWithContext = (overrides: Partial<ProjectContextValue> = {}) => {
+  const value: ProjectContextValue = {
+    ...baseContext,
+    ...overrides,
+    projectsState: {
+      ...baseContext.projectsState,
+      ...(overrides.projectsState ?? {}),
+    },
+  };
   return render(
     <ProjectContext.Provider value={value}>
       <NewProject />

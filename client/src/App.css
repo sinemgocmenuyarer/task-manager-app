@@ -34,7 +34,6 @@ body {
   background: #fbf6ee;
   border: 0.0625rem solid #ddcbb7;
   border-radius: 1rem;
-  padding: 1.75rem;
   box-shadow: 0 1rem 2.25rem rgba(43, 32, 22, 0.12);
   animation: rise-in 420ms ease-out;
 }

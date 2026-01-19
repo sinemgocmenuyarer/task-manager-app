@@ -1,5 +1,5 @@
 import { useContext, useMemo, type ReactNode } from "react";
-import { ProjectContext } from "../store/core.tsx";
+import { ProjectContext } from "../store/context";
 
 export const Tasks = () => {
   const { projectsState, handleDeleteTask } = useContext(ProjectContext);

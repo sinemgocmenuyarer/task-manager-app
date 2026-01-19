@@ -1,7 +1,7 @@
 import { useContext, useState, type ChangeEvent } from "react";
 import { Button } from "./Button";
-import { ProjectContext, type GenerateResponse } from "../store/core";
-import Input from "./Input";
+import { ProjectContext, type GenerateResponse } from "../store/context";
+import { Input } from "./Input";
 
 export const GenerateTaskButton = () => {
   const { handleAddTasks, handleUserMessage, handleClearProjectTasks } =

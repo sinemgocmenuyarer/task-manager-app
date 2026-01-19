@@ -1,7 +1,7 @@
 import { useContext, useState, type ChangeEvent } from "react";
-import { ProjectContext } from "../store/core";
+import { ProjectContext } from "../store/context";
 import { Button } from "./Button";
-import Input from "./Input";
+import { Input } from "./Input";
 
 export const NewTask = () => {
   const { handleAddTask } = useContext(ProjectContext);

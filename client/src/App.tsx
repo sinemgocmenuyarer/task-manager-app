@@ -1,5 +1,5 @@
 import { ProjectSidebar } from "./components/ProjectSidebar";
-import { ProjectContextProvider } from "./store/context";
+import { ProjectContextProvider } from "./store/ProjectContext";
 import { ComponentCheck } from "./components/ComponentCheck";
 import "./App.css";
 

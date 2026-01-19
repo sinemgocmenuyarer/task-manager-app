@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import { Input } from "./Input";
 import { Modal } from "./Modal";
-import { ProjectContext } from "../store/core";
+import { ProjectContext } from "../store/context";
 
 export const NewProject = () => {
   const { handleSaveProject, handleCancelProject } = useContext(ProjectContext);

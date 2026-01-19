@@ -1,9 +1,8 @@
 import { useContext } from "react";
-
-import { Tasks } from "./Tasks.tsx";
-import { ProjectContext } from "../store/core.tsx";
-import { GenerateTaskButton } from "./GenerateTask.tsx";
-import { NewTask } from "./NewTask.tsx";
+import { Tasks } from "./Tasks";
+import { ProjectContext } from "../store/context";
+import { GenerateTaskButton } from "./GenerateTask";
+import { NewTask } from "./NewTask";
 
 export const SelectedProject = () => {
   const { projectsState, handleDeleteProject } = useContext(ProjectContext);

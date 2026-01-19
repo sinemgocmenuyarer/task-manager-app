@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Button } from "./Button";
-import { ProjectContext } from "../store/core";
+import { ProjectContext } from "../store/context";
 
 export const ProjectSidebar = () => {
   const { handleAddProject, projectsState, handleSelectProject } =

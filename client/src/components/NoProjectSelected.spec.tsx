@@ -1,20 +1,19 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NoProjectSelected } from "./NoProjectSelected";
-import { ProjectContext, type ProjectContextValue } from "../store/core";
+import { ProjectContext, type ProjectContextValue } from "../store/context";
 
-const baseContext: Partial<ProjectContextValue> = {
-  projectsState: {
-    selectedProjectId: undefined,
-    projects: [],
-    tasks: [],
-    userMessage: null,
-  },
-  handleAddProject: () => {},
-};
+import { baseContext } from "../test/helper";
 
-const renderWithContext = (overrides?: Partial<ProjectContextValue>) => {
-  const value = { ...baseContext, ...overrides } as ProjectContextValue;
+const renderWithContext = (overrides: Partial<ProjectContextValue> = {}) => {
+  const value: ProjectContextValue = {
+    ...baseContext,
+    ...overrides,
+    projectsState: {
+      ...baseContext.projectsState,
+      ...(overrides.projectsState ?? {}),
+    },
+  };
   return render(
     <ProjectContext.Provider value={value}>
       <NoProjectSelected />
