@@ -16,7 +16,7 @@ breakdowns with user-friendly messages for unclear input.
 - Responsive UI
 - Optimized images
 
-## Upcoming/Possible MVP2 Features
+## Upcoming / Possible MVP2 Features
 
 - Drag and drop tasks
 - Edit tasks
