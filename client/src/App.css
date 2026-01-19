@@ -663,6 +663,17 @@ body {
     min-height: auto;
   }
 
+  .selected-project-main,
+  .selected-project-generator,
+  .new-task,
+  .ai-task-generator {
+    width: 100%;
+  }
+
+  .new-task-input {
+    width: 100%;
+  }
+
   .status-board {
     flex-direction: column;
   }
