@@ -38,8 +38,18 @@ describe("ProjectSidebar", () => {
     renderWithContext({
       projectsState: {
         projects: [
-          { id: 1, title: "Alpha", description: "A", dueDate: "2024-01-01" },
-          { id: 2, title: "Beta", description: "B", dueDate: "2024-02-01" },
+          {
+            id: "project-1",
+            title: "Alpha",
+            description: "A",
+            dueDate: "2024-01-01",
+          },
+          {
+            id: "project-2",
+            title: "Beta",
+            description: "B",
+            dueDate: "2024-02-01",
+          },
         ],
       },
     });
@@ -61,8 +71,18 @@ describe("ProjectSidebar", () => {
       handleSelectProject,
       projectsState: {
         projects: [
-          { id: 1, title: "Alpha", description: "A", dueDate: "2024-01-01" },
-          { id: 2, title: "Beta", description: "B", dueDate: "2024-02-01" },
+          {
+            id: "project-1",
+            title: "Alpha",
+            description: "A",
+            dueDate: "2024-01-01",
+          },
+          {
+            id: "project-2",
+            title: "Beta",
+            description: "B",
+            dueDate: "2024-02-01",
+          },
         ],
       },
     });
@@ -70,7 +90,7 @@ describe("ProjectSidebar", () => {
     await user.click(screen.getByRole("button", { name: "Beta" }));
 
     expect(handleSelectProject).toHaveBeenCalledTimes(1);
-    expect(handleSelectProject).toHaveBeenCalledWith(2);
+    expect(handleSelectProject).toHaveBeenCalledWith("project-2");
   });
 
   test("calls handleAddProject when add button clicked", async () => {

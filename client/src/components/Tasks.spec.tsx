@@ -56,11 +56,11 @@ describe("Tasks", () => {
   test("renders tasks for selected project", () => {
     renderWithContext({
       projectsState: {
-        selectedProjectId: 1,
+        selectedProjectId: "project-1",
         tasks: [
-          { text: "Task A", projectId: 1 },
-          { text: "Task B", projectId: 2 },
-          { text: "Task C", projectId: 1 },
+          { text: "Task A", projectId: "project-1" },
+          { text: "Task B", projectId: "project-2" },
+          { text: "Task C", projectId: "project-1" },
         ],
       },
     });
@@ -77,10 +77,10 @@ describe("Tasks", () => {
     renderWithContext({
       handleDeleteTask,
       projectsState: {
-        selectedProjectId: 1,
+        selectedProjectId: "project-1",
         tasks: [
-          { text: "Task A", projectId: 1 },
-          { text: "Task B", projectId: 1 },
+          { text: "Task A", projectId: "project-1" },
+          { text: "Task B", projectId: "project-1" },
         ],
 
         userMessage: null,

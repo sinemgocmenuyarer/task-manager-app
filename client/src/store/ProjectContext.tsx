@@ -24,7 +24,7 @@ export const ProjectContextProvider = ({
 
   function handleSaveProject(projectData: Omit<Project, "id">) {
     setProjectState((prevState) => {
-      const newProject = { ...projectData, id: Math.random() };
+      const newProject = { ...projectData, id: crypto.randomUUID() };
 
       return {
         ...prevState,
@@ -43,7 +43,7 @@ export const ProjectContextProvider = ({
     });
   };
 
-  const handleSelectProject = (id: number) => {
+  const handleSelectProject = (id: string) => {
     setProjectState((prevState) => {
       return {
         ...prevState,

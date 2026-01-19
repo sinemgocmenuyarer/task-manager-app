@@ -48,10 +48,10 @@ describe("SelectedProject", () => {
   test("renders selected project details and children", () => {
     renderWithContext({
       projectsState: {
-        selectedProjectId: 1,
+        selectedProjectId: "project-1",
         projects: [
           {
-            id: 1,
+            id: "project-1",
             title: "Marketing plan",
             description: "Outline channels and milestones.",
             dueDate: "2024-01-15",
@@ -78,10 +78,10 @@ describe("SelectedProject", () => {
     renderWithContext({
       handleDeleteProject,
       projectsState: {
-        selectedProjectId: 1,
+        selectedProjectId: "project-1",
         projects: [
           {
-            id: 1,
+            id: "project-1",
             title: "Marketing plan",
             description: "Outline channels and milestones.",
             dueDate: "2024-01-15",
