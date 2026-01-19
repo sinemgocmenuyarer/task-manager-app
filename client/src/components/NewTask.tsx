@@ -1,7 +1,6 @@
 import { useContext, useState, type ChangeEvent } from "react";
 import { ProjectContext } from "../store/core";
 import { Button } from "./Button";
-import { GenerateTaskButton } from "./GenerateTaskButton";
 
 export const NewTask = () => {
   const { handleAddTask } = useContext(ProjectContext);
@@ -20,20 +19,20 @@ export const NewTask = () => {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="new-task">
       <input
         type="text"
-        className="w-64 px-2 py-1 rounded-sm bg-stone-200"
+        className="new-task-input"
         onChange={handleChange}
         value={enteredTask}
+        placeholder="Type here..."
       />
       <Button
-        className="text-stone-700 hover:text-stone-950"
+        className="secondary-button new-task-add-button"
         onClick={handleClick}
       >
-        Add Task
+        Add Your Task
       </Button>
-      <GenerateTaskButton />
     </div>
   );
 };

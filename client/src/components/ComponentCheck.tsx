@@ -17,5 +17,5 @@ export const ComponentCheck = () => {
     content = <SelectedProject />;
   }
 
-  return <div>{content}</div>;
+  return <div className="main-panel">{content}</div>;
 };

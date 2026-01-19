@@ -31,10 +31,10 @@ const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
   }
 
   return createPortal(
-    <dialog ref={dialog}>
+    <dialog ref={dialog} className="modal">
       {children}
-      <form method="dialog" className="mt-4 text-right">
-        <Button>{buttonCaption}</Button>
+      <form method="dialog" className="modal-actions">
+        <Button className="secondary-button">{buttonCaption}</Button>
       </form>
     </dialog>,
     modalRoot,

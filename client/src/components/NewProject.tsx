@@ -39,18 +39,22 @@ export const NewProject = () => {
   return (
     <>
       <Modal ref={modal} buttonCaption="Okay">
-        <p>Please make sure you provide a valid input</p>{" "}
+        <p className="modal-message">Please make sure you provide a valid input</p>
       </Modal>
-      <div>
-        <menu>
-          <li>
-            <button onClick={handleCancelProject}>Cancel</button>
+      <div className="new-project">
+        <menu className="new-project-actions">
+          <li className="new-project-action">
+            <button className="ghost-button" onClick={handleCancelProject}>
+              Cancel
+            </button>
           </li>
-          <li>
-            <button onClick={onSaveProject}>Save</button>
+          <li className="new-project-action">
+            <button className="primary-button" onClick={onSaveProject}>
+              Save
+            </button>
           </li>
         </menu>
-        <div>
+        <div className="new-project-form">
           <Input type="text" ref={title} label="Title" />
           <Input ref={description} label="Description" textarea />
           <Input type="date" ref={dueDate} label="Due Date" />

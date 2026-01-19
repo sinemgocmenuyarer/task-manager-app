@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState, type ChangeEvent } from "react";
 import { Button } from "./Button";
 import { ProjectContext } from "../store/core";
 
 export const GenerateTaskButton = () => {
   const { projectsState } = useContext(ProjectContext);
+  const [enteredTask, setEnteredTask] = useState("");
 
   const project = projectsState.projects.find(
     (projectItem) => projectItem.id === projectsState.selectedProjectId,
@@ -11,6 +12,10 @@ export const GenerateTaskButton = () => {
 
   if (!project) {
     return null;
+  }
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setEnteredTask(event.target.value);
   }
 
   const handlePromptSubmit = async () => {
@@ -32,11 +37,23 @@ export const GenerateTaskButton = () => {
   };
 
   return (
-    <Button
-      className="text-stone-700 hover:text-stone-950"
-      onClick={handlePromptSubmit}
-    >
-      Generate your task with AI...
-    </Button>
+    <div className="ai-task-generator">
+      <p className="ai-generator-text">
+        Do you want to generate your tasks with AI?
+      </p>
+      <input
+        type="text"
+        className="new-task-input"
+        onChange={handleChange}
+        value={enteredTask}
+        placeholder="Type here..."
+      />
+      <Button
+        className="primary-button ai-generate-button"
+        onClick={handlePromptSubmit}
+      >
+        Generate with AI
+      </Button>
+    </div>
   );
 };

@@ -2,6 +2,8 @@ import { useContext } from "react";
 
 import { Tasks } from "./Tasks.tsx";
 import { ProjectContext } from "../store/core.tsx";
+import { GenerateTaskButton } from "./GenerateTaskButton.tsx";
+import { NewTask } from "./NewTask.tsx";
 
 export const SelectedProject = () => {
   const { projectsState, handleDeleteProject } = useContext(ProjectContext);
@@ -21,25 +23,32 @@ export const SelectedProject = () => {
   });
 
   return (
-    <div className="w-[35rem] mt-16">
-      <header className="pb-4 mb-4 border-b-2 border-stone-300">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-stone-600 mb-2">
-            {project.title}
-          </h1>
-          <button
-            className="text-stone-600 hover:text-stone-950"
-            onClick={handleDeleteProject}
-          >
-            Delete
-          </button>
+    <div className="selected-project-layout">
+      <div className="selected-project-main">
+        <header className="selected-project-header">
+          <div className="selected-project-header-row">
+            <h1 className="selected-project-title">{project.title}</h1>
+            <button className="danger-button" onClick={handleDeleteProject}>
+              Delete
+            </button>
+          </div>
+          <p className="selected-project-date">{formattedDate}</p>
+          <p className="selected-project-description">{project.description}</p>
+        </header>
+
+        <div className="selected-project-generator">
+          <GenerateTaskButton />
         </div>
-        <p className="mb-4 text-stone-400">{formattedDate}</p>
-        <p className="text-stone-600 whitespace-pre-wrap">
-          {project.description}
+        <p className="tasks-subtitle">
+          You can also add your own tasks to this project.
         </p>
-      </header>
-      <Tasks />
+        <div className="tasks-new">
+          <NewTask />
+        </div>
+      </div>
+      <div className="selected-project-tasks">
+        <Tasks />
+      </div>
     </div>
   );
 };

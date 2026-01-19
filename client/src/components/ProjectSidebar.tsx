@@ -8,21 +8,32 @@ export const ProjectSidebar = () => {
 
   return (
     <aside className="sidebar">
-      <h2 className="project-sidebar-title">Your Project</h2>
       <div>
-        <Button onClick={handleAddProject}>+ Add Project</Button>
+        <h2 className="sidebar-title">Your Project</h2>
+
+        <ul className="sidebar-project-list">
+          {projectsState.projects.map((project) => {
+            return (
+              <li className="sidebar-project-item" key={project.id}>
+                <Button
+                  className="sidebar-project-button"
+                  onClick={() => handleSelectProject(project.id)}
+                >
+                  {project.title}
+                </Button>
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      <ul>
-        {projectsState.projects.map((project) => {
-          return (
-            <li key={project.id}>
-              <button onClick={() => handleSelectProject(project.id)}>
-                {project.title}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="sidebar-actions">
+        <Button
+          className="primary-button sidebar-add-button"
+          onClick={handleAddProject}
+        >
+          + Add Project
+        </Button>
+      </div>
     </aside>
   );
 };
