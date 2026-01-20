@@ -5,6 +5,10 @@ generate step-by-step task lists from a prompt. The UI focuses on lightweight
 project organization, while the API uses OpenAI to return structured task
 breakdowns with user-friendly messages for unclear input.
 
+<img width="500" height="500" alt="Screenshot 2026-01-20 at 01 12 55" src="https://github.com/user-attachments/assets/a75fe843-6b0a-4c06-9e9d-7fa70d506ab9" />
+<img width="500" height="450" alt="Screenshot 2026-01-20 at 01 12 23" src="https://github.com/user-attachments/assets/d7d34596-e56c-49c9-b018-357335da1363" />
+
+
 ## MVP Features
 
 - No Project UI
