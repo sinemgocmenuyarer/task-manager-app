@@ -3,8 +3,7 @@ import cors from "cors";
 import generateResponse from "./generateResponse.js";
 import { ApiError } from "./error.js";
 
-const isError = (error: unknown): error is Error =>
-  error instanceof Error;
+const isError = (error: unknown): error is Error => error instanceof Error;
 
 const app = express();
 app.use(express.json());
@@ -29,7 +28,6 @@ app.post("/generate", async (req, res) => {
 
     const content = await generateResponse(prompt);
 
-    // If your model returns JSON, parse carefully:
     let parsed: any;
     try {
       parsed = JSON.parse(content);
