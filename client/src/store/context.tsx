@@ -28,7 +28,6 @@ type GeneratedStep = {
 
 export type GenerateResponse = {
   steps: GeneratedStep[];
-  status: string;
   user_message: string | null;
 };
 

@@ -381,6 +381,16 @@ body {
   color: #6a5f55;
 }
 
+.user-message {
+  margin: 0;
+  padding: 0.75rem 0.875rem;
+  border-radius: 0.75rem;
+  color: #7a1f1a;
+  border: 0.0625rem solid #e3b0a7;
+  background: rgba(255, 232, 228, 0.85);
+  font-weight: 600;
+}
+
 .tasks-list {
   max-height: 80vh;
   min-height: 70vh;

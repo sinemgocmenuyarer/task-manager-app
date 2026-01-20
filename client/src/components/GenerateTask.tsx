@@ -1,6 +1,7 @@
 import { useContext, useState, type ChangeEvent } from "react";
 import { Button } from "./Button";
 import { ProjectContext, type GenerateResponse } from "../store/context";
+import { getUserErrorMessage } from "../errors";
 import { Input } from "./Input";
 
 export const GenerateTaskButton = () => {
@@ -25,7 +26,7 @@ export const GenerateTaskButton = () => {
       const response = await generateResponse();
       const message = response.user_message ?? null;
 
-      if (response.status === "success") {
+      if (response.steps.length > 0) {
         const titles = response.steps
           .map((step) => step.title)
           .filter((title) => title.trim().length > 0);
@@ -34,6 +35,11 @@ export const GenerateTaskButton = () => {
       } else {
         handleClearProjectTasks();
       }
+      handleUserMessage(message);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Please try again.";
+      handleClearProjectTasks();
       handleUserMessage(message);
     } finally {
       setIsLoading(false);
@@ -49,7 +55,14 @@ export const GenerateTaskButton = () => {
       body: JSON.stringify({ prompt: enteredTask }),
     });
 
-    const data = (await response.json()) as GenerateResponse;
+    const data = (await response.json()) as GenerateResponse & {
+      error?: string;
+      message?: string;
+    };
+
+    if (!response.ok) {
+      throw new Error(getUserErrorMessage(response.status, data));
+    }
     return data;
   };
 

@@ -68,28 +68,24 @@ Example valid output for a clear task:
       "effort": "s"
     }
   ],
-  "status": "success",
   "user_message": null
 }
 
 Example output for a vague task
 {
   "steps": [],
-  "status": "needs_clarification",
   "user_message": "I couldn’t identify a clear task. Try describing a specific goal, like building an app, planning an event, or learning a new skill."
 }
 
 Example output for an illegal task
 {
   "steps": [],
-  "status": "illegal_request",
   "user_message": "I can’t assist with that request. However if you want to break down a task, I’d be happy to help!"
 }
 
 Example output for a medical task
 {
   "steps": [],
-  "status": "medical_advice_request",
   "user_message": "I can’t assist with that request. However if you want to break down a task, I’d be happy to help!"}
 
 ...and similar request that other than regular task management, show a proper user message.
