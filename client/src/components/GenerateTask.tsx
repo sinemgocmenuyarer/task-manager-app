@@ -1,4 +1,4 @@
-import { useContext, useState, type ChangeEvent } from "react";
+import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
 import { Button } from "./Button";
 import { ProjectContext, type GenerateResponse } from "../store/context";
 import { getUserErrorMessage } from "../errors";
@@ -14,7 +14,7 @@ export const GenerateTaskButton = () => {
     setEnteredTask(event.target.value);
   }
 
-  const handlePromptSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
+  const handlePromptSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isLoading) {
