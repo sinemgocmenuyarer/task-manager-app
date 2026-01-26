@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, type ReactNode } from "react";
+import { useImperativeHandle, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { Button } from "./Button";
 
@@ -9,12 +9,10 @@ type ModalHandle = {
 type ModalProps = {
   children: ReactNode;
   buttonCaption: string;
+  ref?: React.Ref<ModalHandle>;
 };
 
-export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
-  { children, buttonCaption },
-  ref,
-) {
+export const Modal = ({ children, buttonCaption, ref }: ModalProps) => {
   const dialog = useRef<HTMLDialogElement>(null);
 
   useImperativeHandle(ref, () => {
@@ -39,4 +37,4 @@ export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
     </dialog>,
     modalRoot,
   );
-});
+};

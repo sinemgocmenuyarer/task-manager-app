@@ -4,8 +4,6 @@ export const baseContext: ProjectContextValue = {
   projectsState: {
     selectedProjectId: undefined,
     projects: [],
-    tasks: [],
-    userMessage: null,
   },
   handleAddProject: () => {},
   handleSaveProject: () => {},
@@ -16,5 +14,4 @@ export const baseContext: ProjectContextValue = {
   handleDeleteTask: () => {},
   handleDeleteProject: () => {},
   handleUserMessage: () => {},
-  handleClearProjectTasks: () => {},
 };

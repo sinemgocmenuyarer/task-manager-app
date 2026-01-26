@@ -1,23 +1,26 @@
-import { useContext, useState, type ChangeEvent } from "react";
+import { useContext, useRef, type FormEvent } from "react";
 import { ProjectContext } from "../store/context";
 import { Button } from "./Button";
 import { Input } from "./Input";
 
 export const NewTask = () => {
   const { handleAddTask } = useContext(ProjectContext);
-  const [enteredTask, setEnteredTask] = useState("");
 
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setEnteredTask(event.target.value);
-  }
+  const task = useRef<HTMLInputElement>(null);
 
-  function handleClick(event: ChangeEvent<HTMLFormElement>) {
+  function handleClick(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (enteredTask.trim() === "") {
+
+    const enteredTask = task.current?.value;
+
+    if (!enteredTask || enteredTask.trim() === "") {
       return;
     }
     handleAddTask(enteredTask);
-    setEnteredTask("");
+
+    if (task.current) {
+      task.current.value = "";
+    }
   }
 
   return (
@@ -29,8 +32,7 @@ export const NewTask = () => {
         <Input
           type="text"
           className="new-task-input"
-          onChange={handleChange}
-          value={enteredTask}
+          ref={task}
           placeholder="Type here..."
           label={"new-task-input"}
         />
