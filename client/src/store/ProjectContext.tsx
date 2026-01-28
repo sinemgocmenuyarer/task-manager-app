@@ -6,13 +6,21 @@ export const ProjectContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [projectsState, setProjectState] = useState<ProjectsState>({
-    selectedProjectId: undefined,
-    projects: [],
-    tasks: [],
-    userMessage: null,
+  const [projectsState, setProjectState] = useState<ProjectsState>(() => {
+    const stored = localStorage.getItem("projectState");
+    return stored
+      ? JSON.parse(stored)
+      : {
+          selectedProjectId: undefined,
+          projects: [],
+          tasks: [],
+          userMessage: null,
+        };
   });
 
+  localStorage.setItem("projectState", JSON.stringify(projectsState));
+
+  console.log("projectsState", projectsState);
   const handleAddProject = () => {
     setProjectState((prevState) => {
       return {
