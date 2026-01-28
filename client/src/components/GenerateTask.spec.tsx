@@ -28,10 +28,12 @@ describe("GenerateTaskButton", () => {
   test("submits prompt and adds tasks on success", async () => {
     const handleAddTasks = jest.fn();
     const handleUserMessage = jest.fn();
-    const handleClearProjectTasks = jest.fn();
+
     const user = userEvent.setup();
 
     mockFetch.mockResolvedValue({
+      ok: true,
+      status: 200,
       json: async () => ({
         status: "success",
         steps: [
@@ -45,7 +47,6 @@ describe("GenerateTaskButton", () => {
     renderWithContext({
       handleAddTasks,
       handleUserMessage,
-      handleClearProjectTasks,
     });
 
     await user.type(screen.getByLabelText("ai-task-input"), "Plan trip");
@@ -55,7 +56,6 @@ describe("GenerateTaskButton", () => {
       expect(handleAddTasks).toHaveBeenCalledWith(["First task"]);
     });
 
-    expect(handleClearProjectTasks).not.toHaveBeenCalled();
     expect(handleUserMessage).toHaveBeenCalledWith(null);
     expect(screen.getByLabelText("ai-task-input")).toHaveValue("");
     expect(mockFetch).toHaveBeenCalledWith("http://localhost:3005/generate", {
@@ -67,13 +67,14 @@ describe("GenerateTaskButton", () => {
     });
   });
 
-  test("clears tasks and shows user message on failure status", async () => {
+  test("shows user message when response has no steps", async () => {
     const handleAddTasks = jest.fn();
     const handleUserMessage = jest.fn();
-    const handleClearProjectTasks = jest.fn();
     const user = userEvent.setup();
 
     mockFetch.mockResolvedValue({
+      ok: true,
+      status: 200,
       json: async () => ({
         status: "error",
         steps: [],
@@ -84,17 +85,39 @@ describe("GenerateTaskButton", () => {
     renderWithContext({
       handleAddTasks,
       handleUserMessage,
-      handleClearProjectTasks,
     });
 
     await user.type(screen.getByLabelText("ai-task-input"), "Plan trip");
     await user.click(screen.getByRole("button", { name: "Generate with AI" }));
 
-    await waitFor(() => {
-      expect(handleClearProjectTasks).toHaveBeenCalledTimes(1);
-    });
-
     expect(handleAddTasks).not.toHaveBeenCalled();
     expect(handleUserMessage).toHaveBeenCalledWith("Please try again.");
+  });
+
+  test("shows mapped user message for non-ok response", async () => {
+    const handleAddTasks = jest.fn();
+    const handleUserMessage = jest.fn();
+    const user = userEvent.setup();
+
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 400,
+      json: async () => ({
+        error: "InvalidRequest",
+      }),
+    });
+
+    renderWithContext({
+      handleAddTasks,
+      handleUserMessage,
+    });
+
+    await user.type(screen.getByLabelText("ai-task-input"), "Plan trip");
+    await user.click(screen.getByRole("button", { name: "Generate with AI" }));
+
+    expect(handleAddTasks).not.toHaveBeenCalled();
+    expect(handleUserMessage).toHaveBeenCalledWith(
+      "Please enter a valid task prompt.",
+    );
   });
 });

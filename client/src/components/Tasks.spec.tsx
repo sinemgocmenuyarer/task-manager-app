@@ -46,7 +46,17 @@ describe("Tasks", () => {
   test("renders user message when present", () => {
     renderWithContext({
       projectsState: {
-        userMessage: "Please enter a valid task.",
+        selectedProjectId: "project-1",
+        projects: [
+          {
+            id: "project-1",
+            title: "Alpha",
+            description: "A",
+            dueDate: "2024-01-01",
+            tasks: [],
+            userMessage: "Please enter a valid task.",
+          },
+        ],
       },
     });
 
@@ -57,10 +67,26 @@ describe("Tasks", () => {
     renderWithContext({
       projectsState: {
         selectedProjectId: "project-1",
-        tasks: [
-          { text: "Task A", projectId: "project-1" },
-          { text: "Task B", projectId: "project-2" },
-          { text: "Task C", projectId: "project-1" },
+        projects: [
+          {
+            id: "project-1",
+            title: "Alpha",
+            description: "A",
+            dueDate: "2024-01-01",
+            tasks: [
+              { taskId: "task-a", text: "Task A" },
+              { taskId: "task-c", text: "Task C" },
+            ],
+            userMessage: null,
+          },
+          {
+            id: "project-2",
+            title: "Beta",
+            description: "B",
+            dueDate: "2024-02-01",
+            tasks: [{ taskId: "task-b", text: "Task B" }],
+            userMessage: null,
+          },
         ],
       },
     });
@@ -78,12 +104,19 @@ describe("Tasks", () => {
       handleDeleteTask,
       projectsState: {
         selectedProjectId: "project-1",
-        tasks: [
-          { text: "Task A", projectId: "project-1" },
-          { text: "Task B", projectId: "project-1" },
+        projects: [
+          {
+            id: "project-1",
+            title: "Alpha",
+            description: "A",
+            dueDate: "2024-01-01",
+            tasks: [
+              { taskId: "task-a", text: "Task A" },
+              { taskId: "task-b", text: "Task B" },
+            ],
+            userMessage: null,
+          },
         ],
-
-        userMessage: null,
       },
     });
 
@@ -91,6 +124,6 @@ describe("Tasks", () => {
     await user.click(clearButtons[1]);
 
     expect(handleDeleteTask).toHaveBeenCalledTimes(1);
-    expect(handleDeleteTask).toHaveBeenCalledWith(1);
+    expect(handleDeleteTask).toHaveBeenCalledWith("task-b");
   });
 });

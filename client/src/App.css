@@ -11,6 +11,7 @@ body {
   min-height: 100vh;
   color: #2b241f;
   font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  background-color: #f6f0e7;
   background:
     radial-gradient(55rem 32.5rem at 92% -8%, #fff6e4 0%, transparent 58%),
     radial-gradient(43.75rem 26.25rem at -8% 28%, #edd9c1 0%, transparent 55%),
@@ -71,6 +72,7 @@ body {
   position: relative;
   flex: 0 0 12.5rem;
   width: 12.5rem;
+  background-color: #efcfb4;
   background: linear-gradient(165deg, #f4e2cd, #efcfb4);
   border-radius: 1rem;
   padding: 1.5rem;
@@ -140,6 +142,7 @@ body {
   padding: 1.5rem;
   border-radius: 1rem;
   border: 0.0625rem solid #e2d3c3;
+  background-color: #fbf6ee;
   background:
     linear-gradient(
       180deg,
@@ -189,6 +192,7 @@ body {
   border: 0.0625rem solid #e2d3c3;
   min-height: 16.25rem;
   width: 100%;
+  background-color: #fbf6ee;
   background:
     linear-gradient(
       180deg,
@@ -231,7 +235,7 @@ body {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #6a5f55;
+  color: #1f1b17;
 }
 
 .form-input,
@@ -316,6 +320,7 @@ body {
   border-radius: 1rem;
   border: 0.0625rem solid #e2d3c3;
   min-height: 16.25rem;
+  background-color: #fbf6ee;
   background:
     linear-gradient(
       180deg,
@@ -364,6 +369,7 @@ body {
   border-radius: 1rem;
   border: 0.0625rem solid #e2d3c3;
   min-height: 16.25rem;
+  background-color: #fbf6ee;
   background:
     linear-gradient(
       180deg,
@@ -404,6 +410,7 @@ body {
   scrollbar-width: thin;
   border-radius: 0.875rem;
   border: 0.0625rem dashed #dcc7b3;
+  background-color: #fcf8f2;
   background: rgba(252, 248, 242, 0.9);
 }
 
@@ -497,6 +504,7 @@ body {
   padding: 1.5rem;
   width: min(26.25rem, 90vw);
   box-shadow: 0 1rem 2.25rem rgba(43, 32, 22, 0.12);
+  background-color: #fffdf7;
   background: #fffdf7;
 }
 
@@ -517,8 +525,8 @@ body {
 
 /* Buttons */
 .primary-button {
-  background: linear-gradient(140deg, #d9865c, #c86a3a);
-  color: #fff7ef;
+  background: linear-gradient(140deg, #b45a2d, #8f3e1b);
+  color: #ffffff;
   border: none;
   border-radius: 62.4375rem;
   padding: 0.625rem 1.125rem;

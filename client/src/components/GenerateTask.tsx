@@ -1,23 +1,23 @@
-import { useContext, useState, type ChangeEvent, type FormEvent } from "react";
+import { useContext, useRef, useState, type FormEvent } from "react";
 import { Button } from "./Button";
 import { ProjectContext, type GenerateResponse } from "../store/context";
 import { getUserErrorMessage } from "../errors";
 import { Input } from "./Input";
 
 export const GenerateTaskButton = () => {
-  const { handleAddTasks, handleUserMessage, handleClearProjectTasks } =
-    useContext(ProjectContext);
-  const [enteredTask, setEnteredTask] = useState("");
+  const { handleAddTasks, handleUserMessage } = useContext(ProjectContext);
   const [isLoading, setIsLoading] = useState(false);
-
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setEnteredTask(event.target.value);
-  }
+  const task = useRef<HTMLInputElement>(null);
 
   const handlePromptSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const enteredTask = task?.current?.value;
     if (isLoading) {
+      return;
+    }
+
+    if (!enteredTask || enteredTask.trim() === "") {
       return;
     }
     setIsLoading(true);
@@ -30,16 +30,16 @@ export const GenerateTaskButton = () => {
         const titles = response.steps
           .map((step) => step.title)
           .filter((title) => title.trim().length > 0);
+
         handleAddTasks(titles);
-        setEnteredTask("");
-      } else {
-        handleClearProjectTasks();
+        if (task.current) {
+          task.current.value = "";
+        }
       }
       handleUserMessage(message);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Please try again.";
-      handleClearProjectTasks();
       handleUserMessage(message);
     } finally {
       setIsLoading(false);
@@ -52,7 +52,7 @@ export const GenerateTaskButton = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt: enteredTask }),
+      body: JSON.stringify({ prompt: task?.current?.value }),
     });
 
     const data = (await response.json()) as GenerateResponse & {
@@ -75,9 +75,8 @@ export const GenerateTaskButton = () => {
       <form className="new-task-form" onSubmit={handlePromptSubmit}>
         <Input
           type="text"
+          ref={task}
           className="new-task-input"
-          onChange={handleChange}
-          value={enteredTask}
           placeholder="Type here..."
           disabled={isLoading}
           label={"ai-task-input"}

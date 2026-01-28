@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { ProjectContext, type Project, type ProjectsState } from "./context";
 
 export const ProjectContextProvider = ({
@@ -6,21 +6,23 @@ export const ProjectContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
+  const defaultState: ProjectsState = {
+    selectedProjectId: undefined,
+    projects: [],
+  };
+
   const [projectsState, setProjectState] = useState<ProjectsState>(() => {
-    const stored = localStorage.getItem("projectState");
-    return stored
-      ? JSON.parse(stored)
-      : {
-          selectedProjectId: undefined,
-          projects: [],
-          tasks: [],
-          userMessage: null,
-        };
+    const storeProjectData = localStorage.getItem("projectsState");
+    if (!storeProjectData) {
+      return defaultState;
+    }
+    return JSON.parse(storeProjectData);
   });
 
-  localStorage.setItem("projectState", JSON.stringify(projectsState));
+  useEffect(() => {
+    localStorage.setItem("projectsState", JSON.stringify(projectsState));
+  }, [projectsState]);
 
-  console.log("projectsState", projectsState);
   const handleAddProject = () => {
     setProjectState((prevState) => {
       return {
@@ -30,9 +32,16 @@ export const ProjectContextProvider = ({
     });
   };
 
-  function handleSaveProject(projectData: Omit<Project, "id">) {
+  function handleSaveProject(
+    projectData: Omit<Project, "id" | "tasks" | "userMessage">,
+  ) {
     setProjectState((prevState) => {
-      const newProject = { ...projectData, id: crypto.randomUUID() };
+      const newProject = {
+        ...projectData,
+        id: crypto.randomUUID(),
+        tasks: [],
+        userMessage: null,
+      };
 
       return {
         ...prevState,
@@ -67,13 +76,21 @@ export const ProjectContextProvider = ({
         return prevState;
       }
       const newTask = {
+        taskId: crypto.randomUUID(),
         text: text,
-        projectId,
       };
+      const updatedProject = prevState.projects.map((project) =>
+        project.id === projectId
+          ? {
+              ...project,
+              tasks: [newTask, ...project.tasks],
+              userMessage: null,
+            }
+          : project,
+      );
       return {
         ...prevState,
-        tasks: [newTask, ...prevState.tasks],
-        userMessage: null,
+        projects: updatedProject,
       };
     });
   }
@@ -88,48 +105,60 @@ export const ProjectContextProvider = ({
         return prevState;
       }
       const newTasks = titles.map((title) => ({
+        taskId: crypto.randomUUID(),
         text: title,
-        projectId,
       }));
+      const updatedProject = prevState.projects.map((project) =>
+        project.id === projectId
+          ? {
+              ...project,
+              tasks: [...newTasks, ...project.tasks],
+              userMessage: null,
+            }
+          : project,
+      );
       return {
         ...prevState,
-        tasks: [...newTasks, ...prevState.tasks],
-        userMessage: null,
+        projects: updatedProject,
       };
     });
   }
 
-  function handleDeleteTask(taskIndex: number) {
+  function handleDeleteTask(taskId: string) {
     setProjectState((prevState) => {
+      const projectId = prevState.selectedProjectId;
+      if (projectId === null || projectId === undefined) {
+        return prevState;
+      }
+      const updatedProject = prevState.projects.map((project) =>
+        project.id === projectId
+          ? {
+              ...project,
+              tasks: project.tasks.filter((task) => task.taskId !== taskId),
+            }
+          : project,
+      );
       return {
         ...prevState,
-        tasks: prevState.tasks.filter((_, index) => index !== taskIndex),
+        projects: updatedProject,
       };
     });
   }
 
   function handleUserMessage(userMessage: string | null) {
     setProjectState((prevState) => {
-      return {
-        ...prevState,
-        userMessage,
-      };
-    });
-  }
-
-  function handleClearProjectTasks() {
-    setProjectState((prevState) => {
-      if (
-        prevState.selectedProjectId === null ||
-        prevState.selectedProjectId === undefined
-      ) {
+      const projectId = prevState.selectedProjectId;
+      if (projectId === null || projectId === undefined) {
         return prevState;
       }
+      const updatedProject = prevState.projects.map((project) =>
+        project.id === projectId
+          ? { ...project, userMessage: userMessage }
+          : project,
+      );
       return {
         ...prevState,
-        tasks: prevState.tasks.filter(
-          (task) => task.projectId !== prevState.selectedProjectId,
-        ),
+        projects: updatedProject,
       };
     });
   }
@@ -163,7 +192,6 @@ export const ProjectContextProvider = ({
     handleDeleteTask,
     handleDeleteProject,
     handleUserMessage,
-    handleClearProjectTasks,
   };
 
   return (
